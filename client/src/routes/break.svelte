@@ -1,6 +1,17 @@
-<h1>Break</h1>
+<script>
+	import { speakers } from '../api/store';
+	import { connect } from '../api/websocket';
+	import { onMount } from 'svelte';
 
-<iframe
-	title="fuck"
-	src="https://streamkit.discord.com/overlay/voice/1002360367558688921/1002360369945260085"
-/>
+	onMount(async () => {
+		connect('ws://localhost:3000/ws');
+	});
+</script>
+
+{#each $speakers as speaker}
+	<h1>{speaker.name}</h1>
+	<img src="" alt="" />
+{/each}
+
+<style lang="scss">
+</style>
