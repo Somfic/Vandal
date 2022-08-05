@@ -8,6 +8,7 @@ export class UserInfo {
 	id: string;
 	color: string;
 	name: string;
+	image = "";
 	isTalking = false;
 }
 
@@ -18,7 +19,8 @@ const users = [
 ];
 
 export function getUserInfo(id: string, isTalking: boolean): UserInfo {
-	const user = users.find((user) => user.id === id) ?? new UserInfo('', '', '');
+	const user = users.find((user) => id.includes(user.id)) ?? new UserInfo('', '', '');
 	user.isTalking = isTalking;
+	user.image = id;
 	return user;
 }
