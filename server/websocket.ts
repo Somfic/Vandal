@@ -4,7 +4,7 @@ import puppeteer from "puppeteer";
 
 let websocket: WebSocket.Server;
 let tracker: WebSocket.WebSocket | undefined;
-let client: WebSocket.WebSocket | undefined;
+let clients: (WebSocket.WebSocket | undefined)[] = [];
 
 export let speakers = new Map<string, boolean>();
 
@@ -29,20 +29,22 @@ export default async (server: Server) => {
 
           tracker.onmessage = (message) => {
             console.log(message.data);
-            client?.send(
-              JSON.stringify({
-                event: "in-game",
-                value: message.data.toString(),
-              })
+            clients.forEach((client) =>
+              client?.send(
+                JSON.stringify({
+                  event: "in-game",
+                  value: message.data.toString(),
+                })
+              )
             );
           };
         }
         if (data.identity === "client") {
           console.log("client connected");
 
-          client = socket;
+          clients?.push(socket);
 
-          client.onclose = () => {
+          socket.onclose = () => {
             console.log("client disconnected");
           };
         }
