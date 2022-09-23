@@ -1,25 +1,25 @@
 export class UserInfo {
-	constructor(id: string, name: string, color: string) {
-		this.id = id;
-		this.name = name;
+	constructor(discordId: string, valorantId: string, color: string) {
+		this.discordId = discordId;
+		this.valorantId = valorantId;
 		this.color = color;
 	}
 
-	id: string;
+	discordId: string;
 	color: string;
-	name: string;
-	image = "";
+	valorantId: string;
+	image = '';
 	isTalking = false;
 }
 
-const users = [
-	new UserInfo('226075562555211776', 'Herobrine', '#FDC05D'),
-	new UserInfo('522833667391881217', 'Honeybee', '#426A5A'),
-	new UserInfo('173411644913876992', 'Maurice', '#2E2836')
+export const users = [
+	new UserInfo('226075562555211776', 'ΗΞЯΘßRΙИΞ #steve', '#FDC05D'),
+	new UserInfo('522833667391881217', 'Honeybee #2310', '#426A5A'),
+	new UserInfo('173411644913876992', 'maurice13f #EUW', '#2E2836')
 ];
 
 export function getUserInfo(id: string, isTalking: boolean): UserInfo {
-	const user = users.find((user) => id.includes(user.id)) ?? new UserInfo('', '', '');
+	const user = users.find((user) => id.includes(user.discordId)) ?? new UserInfo('', '', '');
 	user.isTalking = isTalking;
 	user.image = id;
 	return user;

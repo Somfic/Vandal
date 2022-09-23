@@ -1,21 +1,16 @@
 import {
 	messages,
+	oldRoster,
+	oldScore,
+	oldScoreboard,
 	phase,
-	roster0,
-	roster1,
-	roster2,
-	roster3,
-	roster4,
-	roster5,
-	roster6,
-	roster7,
-	roster8,
-	roster9,
-	speakers
+	roster,
+	scoreboard,
+	speakers,
+	score
 } from './store';
 import { getUserInfo } from './userinfo';
 import { goto } from '$app/navigation';
-import { page } from '$app/stores';
 import { map } from './translator';
 import { get } from 'svelte/store';
 import type { ChatMessage } from './chat';
@@ -73,20 +68,17 @@ export function connect(url: string) {
 							case 'Breeze':
 							case 'Ascent':
 							case 'Bind':
+								oldScore.set({ won: 0, lost: 0 });
 								redirect('/map?=' + scene.toLowerCase());
 								break;
 
 							case 'CharacterSelectPersistentLevel':
-								roster0.set(undefined);
-								roster1.set(undefined);
-								roster2.set(undefined);
-								roster3.set(undefined);
-								roster4.set(undefined);
-								roster5.set(undefined);
-								roster6.set(undefined);
-								roster7.set(undefined);
-								roster8.set(undefined);
-								roster9.set(undefined);
+								for (let index = 0; index < 10; index++) {
+									roster.update((r) => {
+										r[index] = undefined;
+										return r;
+									});
+								}
 								redirect('/agent-selection');
 								break;
 						}
@@ -94,52 +86,50 @@ export function connect(url: string) {
 				}
 
 				if (value['match_info']) {
-					if (value['match_info']['roster_0']) {
-						roster0.set(JSON.parse(value['match_info']['roster_0']));
+					for (let index = 0; index < 10; index++) {
+						if (value['match_info']['roster_' + index]) {
+							const parsed = JSON.parse(value['match_info']['roster_' + index]);
+							roster.update((r) => {
+								r[index] = parsed;
+								return r;
+							});
+						}
+
+						if (value['match_info']['scoreboard_' + index]) {
+							const parsed = JSON.parse(value['match_info']['scoreboard_' + index]);
+							scoreboard.update((s) => {
+								s[index] = parsed;
+								return s;
+							});
+						}
 					}
 
-					if (value['match_info']['roster_1']) {
-						roster1.set(JSON.parse(value['match_info']['roster_1']));
-					}
-
-					if (value['match_info']['roster_2']) {
-						roster2.set(JSON.parse(value['match_info']['roster_2']));
-					}
-
-					if (value['match_info']['roster_3']) {
-						roster3.set(JSON.parse(value['match_info']['roster_3']));
-					}
-
-					if (value['match_info']['roster_4']) {
-						roster4.set(JSON.parse(value['match_info']['roster_4']));
-					}
-
-					if (value['match_info']['roster_5']) {
-						roster5.set(JSON.parse(value['match_info']['roster_5']));
-					}
-
-					if (value['match_info']['roster_6']) {
-						roster6.set(JSON.parse(value['match_info']['roster_6']));
-					}
-
-					if (value['match_info']['roster_7']) {
-						roster7.set(JSON.parse(value['match_info']['roster_7']));
-					}
-
-					if (value['match_info']['roster_8']) {
-						roster8.set(JSON.parse(value['match_info']['roster_8']));
-					}
-
-					if (value['match_info']['roster_9']) {
-						roster9.set(JSON.parse(value['match_info']['roster_9']));
+					if (value['match_info']['score']) {
+						const parsed = JSON.parse(value['match_info']['score']);
+						score.set(parsed);
 					}
 
 					if (value['match_info']['round_phase']) {
-						if (value['match_info']['round_phase'] === 'game_start') {
+						setTimeout(() => {
 							redirect('/game');
+						}, 1000); // wait 1 second for screen to load
+
+						const phaseValue = value['match_info']['round_phase'];
+
+						if (phaseValue === 'shopping') {
+							setTimeout(() => {
+								oldRoster.set(get(roster));
+								oldScoreboard.set(get(scoreboard));
+							}, 1000);
 						}
 
-						phase.set(value['match_info']['round_phase']);
+						if (phaseValue === 'shopping') {
+							setTimeout(() => {
+								oldScore.set(get(score));
+							}, 1000);
+						}
+
+						phase.set(phaseValue);
 					}
 				}
 

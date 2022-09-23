@@ -21,7 +21,7 @@
 		z-index: 1;
 		bottom: 50px;
 		right: 25px;
-		border-radius: 5px;
 		overflow: hidden;
+		border-radius: 10px;
 	}
 </style>

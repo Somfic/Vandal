@@ -4,6 +4,7 @@ export interface ChatMessage {
 	channel: string;
 	tags: Tags;
 	message: string;
+	hidden: boolean;
 }
 
 export interface Tags {

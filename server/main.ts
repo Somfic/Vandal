@@ -14,30 +14,30 @@ const port = 3000;
 app.use(cors());
 
 (async () => {
-  let server = app.listen(port, () => {
-    console.log(`Server listening on port ${port}`);
-  });
-
-  client = new tmi.Client({
-    options: { debug: true },
-    identity: {
-      username: "justinfan000",
-      password: "",
-    },
-    channels: ["notyetnamed3"],
-  });
-  client.connect().catch(console.error);
-  client.on("message", (channel, tags, message, self) => {
-    send({
-      event: "twitch-chat",
-      value: {
-        id: new Date().toISOString(),
-        channel: channel,
-        tags: tags,
-        message: message,
-      },
+    let server = app.listen(port, () => {
+        console.log(`Server listening on port ${port}`);
     });
-  });
 
-  websocket(server);
+    client = new tmi.Client({
+        options: { debug: true },
+        identity: {
+            username: "justinfan000",
+            password: "",
+        },
+        channels: ["lapzwansen"],
+    });
+    client.connect().catch(console.error);
+    client.on("message", (channel, tags, message, self) => {
+        send({
+            event: "twitch-chat",
+            value: {
+                id: new Date().toISOString(),
+                channel: channel,
+                tags: tags,
+                message: message,
+            },
+        });
+    });
+
+    websocket(server);
 })();
