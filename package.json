@@ -1,0 +1,29 @@
+{
+    "name": "vandal",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "install": "concurrently \"npm run client-build\" \"npm run server-build\" \"npm run tracker-build\"",
+        "start": "concurrently \"npm run server\" \"npm run client\"",
+        "client": "cd client && npm run dev",
+        "server": "cd server && npm run dev",
+        "client-build": "cd client && npm ci",
+        "server-build": "cd server && npm ci",
+        "tracker-build": "cd tracker && npm ci && npm run build"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Somfic/Vandal.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Somfic/Vandal/issues"
+    },
+    "homepage": "https://github.com/Somfic/Vandal#readme",
+    "dependencies": {
+        "concurrently": "^7.4.0"
+    }
+}

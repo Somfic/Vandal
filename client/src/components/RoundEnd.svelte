@@ -8,7 +8,7 @@
 
 	{#if $score.won > $oldScore.won}
 		<h1>Won</h1>
-	{:else if $score.won < $oldScore.won}
+	{:else if $score.lost > $oldScore.lost}
 		<h1>Lost</h1>
 	{:else}
 		<h1>Tie</h1>

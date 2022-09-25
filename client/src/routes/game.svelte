@@ -19,10 +19,10 @@
 <div class="buy">
 	<BuyOverview players={$scoreboard} />
 </div>
-<!-- 
+
 <div class="round-end" class:shopping={$phase == 'shopping'} class:combat={$phase == 'combat'}>
 	<RoundEnd />
-</div> -->
+</div>
 
 <!-- {/if} -->
 <style lang="scss">

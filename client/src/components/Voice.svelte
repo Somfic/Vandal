@@ -65,7 +65,7 @@
 			}
 
 			&.dead {
-				img {
+				img.small {
 					filter: grayscale(1);
 				}
 			}

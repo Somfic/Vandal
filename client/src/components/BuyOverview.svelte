@@ -30,11 +30,11 @@
 					class="kd"
 					class:show={(player?.kills ?? 0) + (player?.deaths ?? 0) + (player?.assists ?? 0) > 0}
 				>
-					<span>{player?.kills}</span>
+					<span class="kills">{player?.kills}</span>
 					/
-					<span>{player?.deaths}</span>
+					<span class="deaths">{player?.deaths}</span>
 					/
-					<span>{player?.assists}</span>
+					<span class="assists">{player?.assists}</span>
 				</div>
 			</div>
 		{/each}
@@ -92,12 +92,24 @@
 		}
 
 		.kd {
-			color: transparentize(white, 0.5);
+			color: transparentize(white, 0.9);
 			padding-right: 0.5rem;
 			opacity: 0;
 
 			&.show {
 				opacity: 1;
+			}
+
+			.deaths {
+				color: rgb(228, 80, 80);
+			}
+
+			.kills {
+				color: rgb(109, 207, 109);
+			}
+
+			.assits {
+				color: rgb(162, 162, 162);
 			}
 
 			span {

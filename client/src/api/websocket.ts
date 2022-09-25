@@ -57,6 +57,8 @@ export function connect(url: string) {
 							case 'Init':
 							case 'MainMenu': {
 								redirect('/break');
+								oldScore.set({ won: 0, lost: 0 });
+								score.set({ won: 0, lost: 0 });
 								break;
 							}
 
@@ -69,6 +71,7 @@ export function connect(url: string) {
 							case 'Ascent':
 							case 'Bind':
 								oldScore.set({ won: 0, lost: 0 });
+								score.set({ won: 0, lost: 0 });
 								redirect('/map?=' + scene.toLowerCase());
 								break;
 
